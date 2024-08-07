@@ -4,7 +4,6 @@ This is a CLI version of Tic-Tac-Toe written in Python.
 
 Future tasks:
 - unit tests
-- reorganize classes to separate files
 - update game to accept either two human users or one human and one computer
 - add ability to play game repeatedly
 - add computer levels that are smarter
