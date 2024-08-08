@@ -51,8 +51,8 @@ class GameDriver:
 def set_up_game():
     username = pyip.inputStr(prompt="Enter username: ",
                              default="user x", blank=False, limit=3)
-    computer_level = pyip.inputInt(prompt="Enter computer level (1, 2): ",
-                             default=1, min=1, max=2, limit=3)
+    computer_level = pyip.inputInt(prompt="Enter computer level (1, 2, 3): ",
+                             default=1, min=1, max=3, limit=3)
     game = GameDriver(username, computer_level)
     return game
 

@@ -6,7 +6,6 @@ Future tasks:
 - unit tests
 - update game to accept either two human users or one human and one computer
 - add ability to play game repeatedly
-- add computer levels that are smarter
 - build backend game and front end UI with websockets
 - cache number of wins/losses in current session and show on UI
 - create backend database for storing all users and their
