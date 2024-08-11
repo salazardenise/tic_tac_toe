@@ -3,10 +3,13 @@ This is a Command Line Interface game of Rock Paper Scissors
 for a human user versus a computer.
 """
 import pyinputplus as pyip
-from user import User, Computer, UserSymbol
-from grid import Grid
+from cli.classes.user import User
+from cli.classes.user import Computer
+from cli.classes.grid import Grid
+from cli.constants.constants import SYMBOL_X
 
-class GameDriver:
+
+class CliGameDriver:
     """
     GameDriver represents a game driver for tic, tac, toe.
 
@@ -18,7 +21,7 @@ class GameDriver:
     """
 
     def __init__(self, user_1, computer_level=1):
-        self.user_1 = User(user_1, UserSymbol.X.value)
+        self.user_1 = User(user_1, SYMBOL_X)
         self.user_2 = Computer(computer_level)
         self.grid = Grid()
 
@@ -36,9 +39,9 @@ class GameDriver:
             if not user_one_turn:
                 curr_user = self.user_2
             # play user
-            curr_user.play_user(self.grid)
+            curr_user.play_user(self.grid.grid)
             # check if user won
-            if self.grid.did_user_win(curr_user):
+            if self.grid.did_user_win(curr_user.symbol):
                 game_over = "Wahoo! User {} won!".format(curr_user.name)
                 break
             # swtich user
@@ -53,7 +56,7 @@ def set_up_game():
                              default="user x", blank=False, limit=3)
     computer_level = pyip.inputInt(prompt="Enter computer level (1, 2, 3): ",
                              default=1, min=1, max=3, limit=3)
-    game = GameDriver(username, computer_level)
+    game = CliGameDriver(username, computer_level)
     return game
 
 
