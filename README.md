@@ -3,9 +3,10 @@
 This is a CLI version of Tic-Tac-Toe written in Python. 
 
 Future tasks:
-- unit tests
+- increase test coverage, add test for CliGameDriver
 - update game to accept either two human users or one human and one computer
 - add ability to play game repeatedly
+- terminate game early when no one can win
 - build backend game and front end UI with websockets
 - cache number of wins/losses in current session and show on UI
 - create backend database for storing all users and their
@@ -28,7 +29,7 @@ pip3 install -r requirements.txt
 
 ### 3. Start the CLI game.
 ```
-python3 cli.py
+python3 cli/game_driver.py
 ```
 
 ### 4. To deactivate the virtual environment.
@@ -46,4 +47,13 @@ pip3 list
 linting:
 ```
 pylint cli.py
+```
+
+testing, from home directory:
+```
+python3 -m unittest discover
+python3 -m unittest tests/test_user.py
+coverage run -m unittest discover
+coverage report
+coverage html
 ```
