@@ -28,7 +28,7 @@ pip3 install -r requirements.txt
 
 ### 3. Start the CLI game.
 ```
-python3 cli/game_driver.py
+python3 cli_game_driver.py
 ```
 
 ### 4. To deactivate the virtual environment.
