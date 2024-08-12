@@ -12,7 +12,12 @@ def set_up_game():
                              default="user x", 
                              blank=False, 
                              limit=c.INPUT_LIMIT)
-    computer_level = pyip.inputInt(prompt="Enter computer level (1, 2, 3, 4): ",
+    computer_prompt = "Enter computer level (1, 2, 3, 4)\n" + \
+                      "* Level 1: Basic\n" + \
+                      "* Level 2: Random\n" + \
+                      "* Level 3: Plays to block\n" + \
+                      "* Level 4: Plays to win\n"
+    computer_level = pyip.inputInt(prompt=computer_prompt,
                              default=1, 
                              min=1, 
                              max=4, 
@@ -22,5 +27,6 @@ def set_up_game():
 
 
 if __name__ == "__main__":
+
     game = set_up_game()
     game.play()

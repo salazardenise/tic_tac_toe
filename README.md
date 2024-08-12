@@ -5,7 +5,6 @@ This is a CLI version of Tic-Tac-Toe written in Python.
 Future tasks:
 - increase test coverage, add test for GameDriver
 - terminate game early when no one can win
-- add help message with computer level descriptions
 - build backend game and front end UI with websockets
 - cache number of wins/losses in current session and show on UI
 - create backend database for storing all users and their
