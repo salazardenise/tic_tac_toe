@@ -33,13 +33,13 @@ class User:
         x, y = -1, -1
         while not is_valid_entry(grid, x, y):
             x = pyip.inputInt(prompt=self.ENTER_X_PROMPT,
-                             default=0, timeout=180,
-                             min=0, 
-                             max=2)
+                             default=0, timeout=c.INPUT_TIMEOUT,
+                             min=c.MIN_COORDINATE, 
+                             max=c.MAX_COORDINATE)
             y = pyip.inputInt(prompt=self.ENTER_Y_PROMPT,
-                             default=0, timeout=180,
-                             min=0, 
-                             max=2)        
+                             default=0, timeout=c.INPUT_TIMEOUT,
+                             min=c.MIN_COORDINATE, 
+                             max=c.MAX_COORDINATE)        
             print(COORDINATES_CHOSEN_PROMPT.format(x, y))
         grid[x][y] = self.symbol
 
@@ -92,7 +92,7 @@ class Computer(User):
         x, y = -1, -1
         for i in range(0, c.NUM_ROWS):
             for j in range(0, c.NUM_COLS):
-                if grid[i][j] == " ":
+                if grid[i][j] == c.SYMBOL_BLANK:
                     return (i, j)
         return (x, y)
 
@@ -105,10 +105,10 @@ class Computer(User):
 
     def _play_smart_spot(self, grid):
         # check rows
-        for i in range(0, 3):
+        for i in range(0, c.NUM_ROWS):
             coordinates_possible = []
             count = 0
-            for j in range(0, 3):
+            for j in range(0, c.NUM_COLS):
                 if grid[i][j] == c.SYMBOL_X:
                     count += 1
                 elif grid[i][j] == c.SYMBOL_BLANK:
@@ -116,10 +116,10 @@ class Computer(User):
             if count == 2 and len(coordinates_possible) > 0:
                 return coordinates_possible[0]
         # check columns
-        for j in range(0, 3):
+        for j in range(0, c.NUM_COLS):
             coordinates_possible = []
             count = 0
-            for i in range(0, 3):
+            for i in range(0, c.NUM_ROWS):
                 if grid[i][j] == c.SYMBOL_X:
                     count += 1
                 elif grid[i][j] == c.SYMBOL_BLANK:

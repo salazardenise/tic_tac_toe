@@ -6,10 +6,20 @@ import pyinputplus as pyip
 from cli.classes.user import User
 from cli.classes.user import Computer
 from cli.classes.grid import Grid
-from cli.constants.constants import SYMBOL_X
+from cli.constants.constants import SYMBOL_X, INPUT_LIMIT, INPUT_TIMEOUT
 
 
 class GameDriver:
+
+    WELCOME_MESSAGE = "Welcome to Tic, Tac, Toe!"
+    PROMPT_PLAY = "Ready to Play? (Y/N)\n"
+    PROMPT_PLAY_AGAIN = "Want to play again? (Y/N)\n"
+
+    TIE_MESSAGE = "It's a Tie!"
+    USER_WON_GAME_MESSAGE_FORMAT = "Wahoo! User {} won!"
+    CONGRATS_MESSAGE = "Congrats y'all!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    USER_TALLY_MESSAGE_FORMAT = "User {} won {} out of {} game(s)!"
+
     """
     GameDriver represents a game driver for tic, tac, toe.
 
@@ -25,18 +35,26 @@ class GameDriver:
         self.user_2 = Computer(computer_level)
         self.grid = Grid()
 
+    def _is_ready(self, message):
+        is_ready = pyip.inputMenu(['Y', 'N'], 
+                    prompt=message,
+                    limit=INPUT_LIMIT,
+                    timeout=INPUT_TIMEOUT)
+        return is_ready == "Y"
+
+    def _print_user_final_tally(self, user, total_games):
+        print(self.USER_TALLY_MESSAGE_FORMAT.format(
+            user.name, user.num_wins, total_games))
 
     def play(self):
-        print("Welcome to Tic, Tac, Toe!")
+        print(self.WELCOME_MESSAGE)
         total_games = 0
+        is_ready_prompt = self.PROMPT_PLAY
 
-        is_ready = pyip.inputMenu(['Y', 'N'], 
-                    prompt="Ready to Play? (Y/N)\n")
-        while is_ready == "Y":
-
+        while self._is_ready(is_ready_prompt):
             # prepare for game
             user_one_turn = True
-            game_over = "It's a Tie!"
+            game_over = self.TIE_MESSAGE
             self.grid.reset()
             total_games += 1
 
@@ -51,7 +69,8 @@ class GameDriver:
                 curr_user.play_user(self.grid.grid)
                 # check if user won
                 if self.grid.did_user_win(curr_user.symbol):
-                    game_over = "Wahoo! User {} won!".format(curr_user.name)
+                    game_over = USER_WON_GAME_MESSAGE_FORMAT.format(
+                        curr_user.name)
                     curr_user.increase_num_wins()
                     break
                 # swtich user
@@ -61,10 +80,8 @@ class GameDriver:
             self.grid.pretty_print()
 
             # ask if want to play game
-            is_ready = pyip.inputMenu(['Y', 'N'], 
-                        prompt="Want to play again? (Y/N)\n")
-            print("Congrats y'all!")
-            print("User {} won {} out of {} game(s)!".format(
-                self.user_1.name, self.user_1.num_wins, total_games))
-            print("User {} won {} out of {} game(s)!".format(
-                self.user_2.name, self.user_2.num_wins, total_games))
+            is_ready_prompt = self.PROMPT_PLAY_AGAIN
+
+        print(self.CONGRATS_MESSAGE)
+        self._print_user_final_tally(self.user_1, total_games)
+        self._print_user_final_tally(self.user_2, total_games)

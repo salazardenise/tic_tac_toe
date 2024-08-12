@@ -4,12 +4,12 @@ This is a CLI version of Tic-Tac-Toe written in Python.
 
 Future tasks:
 - increase test coverage, add test for GameDriver
-- update game to accept either two human users or one human and one computer
 - terminate game early when no one can win
 - build backend game and front end UI with websockets
 - cache number of wins/losses in current session and show on UI
 - create backend database for storing all users and their
 number of wins and loses over time to show a leadboard on the UI
+- update game to accept either two human users or one human and one computer
 
 ## Requirements
 - python3
