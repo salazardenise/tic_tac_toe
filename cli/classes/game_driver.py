@@ -69,7 +69,7 @@ class GameDriver:
                 curr_user.play_user(self.grid.grid)
                 # check if user won
                 if self.grid.did_user_win(curr_user.symbol):
-                    game_over = USER_WON_GAME_MESSAGE_FORMAT.format(
+                    game_over = self.USER_WON_GAME_MESSAGE_FORMAT.format(
                         curr_user.name)
                     curr_user.increase_num_wins()
                     break
@@ -79,7 +79,7 @@ class GameDriver:
             print(game_over)
             self.grid.pretty_print()
 
-            # ask if want to play game
+            # ask if want to play game again
             is_ready_prompt = self.PROMPT_PLAY_AGAIN
 
         print(self.CONGRATS_MESSAGE)

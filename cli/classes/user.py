@@ -61,7 +61,7 @@ class Computer(User):
 
     COMPUTER_NAME = "Computer"
     COMPUTER_SYMBOL = c.SYMBOL_O
-    LEVELS = [1, 2, 3]
+    LEVELS = [1, 2, 3, 4]
     UNKNOWN_LEVEL_FORMAT = "unknown level {}"
 
     def __init__(self, level):
@@ -81,7 +81,10 @@ class Computer(User):
             x, y = self._play_random_spot(grid)     
         # Level 3: choose a spot that other user is about to win
         elif self.level == 3:
-            x, y = self._play_smart_spot(grid)
+            x, y = self._play_to_block(grid)
+        # Level 4: choose spot to win first
+        elif self.level == 4:
+            x, y = self._play_to_win(grid)
         else:
             raise Exception(self.UNKNOWN_LEVEL_FORMAT.format(self.level))
 
@@ -103,7 +106,7 @@ class Computer(User):
             y = random.randint(c.MIN_COORDINATE, c.MAX_COORDINATE)
         return (x, y)
 
-    def _play_smart_spot(self, grid):
+    def _play_to_block(self, grid):
         # check rows
         for i in range(0, c.NUM_ROWS):
             coordinates_possible = []
@@ -146,4 +149,51 @@ class Computer(User):
                 coordinates_possible.append((i, j))
         if count == 2 and len(coordinates_possible) > 0:
             return coordinates_possible[0]
+        # if other user is not about to win, pick first open spot
         return self._play_first_open_spot(grid)
+
+    def _play_to_win(self, grid):
+        # check rows
+        for i in range(0, c.NUM_ROWS):
+            count = 0
+            coordinate_possible = None
+            for j in range(0, c.NUM_COLS):
+                if grid[i][j] == self.symbol:
+                    count += 1
+                elif grid[i][j] == c.SYMBOL_BLANK:
+                    coordinate_possible = (i, j)
+            if count == 2 and coordinate_possible:
+                return coordinate_possible
+        # check columns
+        for j in range(0, c.NUM_COLS):
+            coordinate_possible = None
+            count = 0
+            for i in range(0, c.NUM_ROWS):
+                if grid[i][j] == self.symbol:
+                    count += 1
+                elif grid[i][j] == c.SYMBOL_BLANK:
+                    coordinate_possible = (i, j)
+            if count == 2 and coordinate_possible:
+                return coordinate_possible
+        # check diagonal top left to bottom right
+        coordinate_possible = None
+        count = 0
+        for i, j in [(0, 0), (1, 1), (2, 2)]:
+            if grid[i][j] == self.symbol:
+                count += 1
+            elif grid[i][j] == c.SYMBOL_BLANK:
+                coordinate_possible = (i, j)
+        if count == 2 and coordinate_possible:
+            return coordinate_possible
+        # check diagonal top right right to bottom left
+        coordinate_possible = None
+        count = 0
+        for i, j in [(2, 0), (1, 1), (0, 2)]:
+            if grid[i][j] == self.symbol:
+                count += 1
+            elif grid[i][j] == c.SYMBOL_BLANK:
+                coordinate_possible = (i, j)
+        if count == 2 and coordinate_possible:
+            return coordinate_possible
+        # if can't win, try to block other user from winning
+        return self._play_to_block(grid)

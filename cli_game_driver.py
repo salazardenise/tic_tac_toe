@@ -12,10 +12,10 @@ def set_up_game():
                              default="user x", 
                              blank=False, 
                              limit=c.INPUT_LIMIT)
-    computer_level = pyip.inputInt(prompt="Enter computer level (1, 2, 3): ",
+    computer_level = pyip.inputInt(prompt="Enter computer level (1, 2, 3, 4): ",
                              default=1, 
                              min=1, 
-                             max=3, 
+                             max=4, 
                              limit=c.INPUT_LIMIT)
     game = CliGameDriver(username, computer_level)
     return game
