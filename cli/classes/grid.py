@@ -19,6 +19,9 @@ class Grid:
             print(row)
         print()
 
+    def reset(self):
+        self.grid = [[c.SYMBOL_BLANK for _ in range(c.NUM_COLS)] for _ in range(c.NUM_ROWS)]
+
     def is_open(self):
         for i in range(0, c.NUM_ROWS):
             for j in range(0, c.NUM_COLS):

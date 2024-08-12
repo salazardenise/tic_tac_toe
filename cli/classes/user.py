@@ -26,6 +26,7 @@ class User:
     def __init__(self, name, symbol):
         self.name = name
         self.symbol = symbol
+        self.num_wins = 0
 
     def play_user(self, grid):
         print(CURRENT_USER_PROMPT.format(self.name))
@@ -41,6 +42,9 @@ class User:
                              max=2)        
             print(COORDINATES_CHOSEN_PROMPT.format(x, y))
         grid[x][y] = self.symbol
+
+    def increase_num_wins(self):
+        self.num_wins += 1
 
 class Computer(User):
     """

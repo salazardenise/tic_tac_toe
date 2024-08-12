@@ -3,9 +3,8 @@
 This is a CLI version of Tic-Tac-Toe written in Python. 
 
 Future tasks:
-- increase test coverage, add test for CliGameDriver
+- increase test coverage, add test for GameDriver
 - update game to accept either two human users or one human and one computer
-- add ability to play game repeatedly
 - terminate game early when no one can win
 - build backend game and front end UI with websockets
 - cache number of wins/losses in current session and show on UI
