@@ -106,6 +106,7 @@ class Computer(User):
             y = random.randint(c.MIN_COORDINATE, c.MAX_COORDINATE)
         return (x, y)
 
+    # TODO: readability for both play to block and play to win methods
     def _play_to_block(self, grid):
         # check rows
         for i in range(0, c.NUM_ROWS):

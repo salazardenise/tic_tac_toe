@@ -22,6 +22,7 @@ class Grid:
     def reset(self):
         self.grid = [[c.SYMBOL_BLANK for _ in range(c.NUM_COLS)] for _ in range(c.NUM_ROWS)]
 
+    # TODO: return False if no one can win
     def is_open(self):
         for i in range(0, c.NUM_ROWS):
             for j in range(0, c.NUM_COLS):
@@ -29,6 +30,7 @@ class Grid:
                     return True
         return False
 
+    # TODO: create helper function to check line for better readability
     def did_user_win(self, user_symbol):
         # check rows
         for row in self.grid:
