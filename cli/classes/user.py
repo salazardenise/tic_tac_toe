@@ -6,6 +6,7 @@ import cli.constants.constants as c
 
 CURRENT_USER_PROMPT = "Current user is {}!"
 COORDINATES_CHOSEN_PROMPT = "You have chosen ({}, {})."
+USER_TALLY_MESSAGE_FORMAT = "User {} won {} out of {} game(s)!"
 
 
 class User:
@@ -27,6 +28,7 @@ class User:
         self.name = name
         self.symbol = symbol
         self.num_wins = 0
+        self.num_loss = 0
 
     def play_user(self, grid):
         print(CURRENT_USER_PROMPT.format(self.name))
@@ -45,6 +47,14 @@ class User:
 
     def increase_num_wins(self):
         self.num_wins += 1
+
+    def increase_num_loss(self):
+        self.num_loss += 1
+
+    def print_user_tally(self):
+        print(USER_TALLY_MESSAGE_FORMAT.format(
+            self.name, self.num_wins, self.num_wins + self.num_loss))
+
 
 class Computer(User):
     """

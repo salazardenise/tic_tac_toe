@@ -42,10 +42,6 @@ class GameDriver:
                     timeout=INPUT_TIMEOUT)
         return is_ready == "Y"
 
-    def _print_user_final_tally(self, user, total_games):
-        print(self.USER_TALLY_MESSAGE_FORMAT.format(
-            user.name, user.num_wins, total_games))
-
     def play(self):
         print(self.WELCOME_MESSAGE)
         total_games = 0
@@ -63,8 +59,10 @@ class GameDriver:
                 self.grid.pretty_print()
                 # choose user
                 curr_user = self.user_1
+                other_user = self.user_2
                 if not user_one_turn:
                     curr_user = self.user_2
+                    other_user = self.user_1
                 # play user
                 curr_user.play_user(self.grid.grid)
                 # check if user won
@@ -72,6 +70,7 @@ class GameDriver:
                     game_over = self.USER_WON_GAME_MESSAGE_FORMAT.format(
                         curr_user.name)
                     curr_user.increase_num_wins()
+                    other_user.increase_num_loss()
                     break
                 # swtich user
                 user_one_turn = not user_one_turn
@@ -83,5 +82,5 @@ class GameDriver:
             is_ready_prompt = self.PROMPT_PLAY_AGAIN
 
         print(self.CONGRATS_MESSAGE)
-        self._print_user_final_tally(self.user_1, total_games)
-        self._print_user_final_tally(self.user_2, total_games)
+        self.user_1.print_user_tally()
+        self.user_2.print_user_tally()

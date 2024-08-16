@@ -3,6 +3,7 @@
 This is a CLI version of Tic-Tac-Toe written in Python. 
 
 Future tasks:
+- limit user name to 20 characters
 - increase test coverage, add test for GameDriver
     - mock is_ready - https://docs.python.org/3/library/unittest.mock-examples.html 
 - terminate game early when no one can win
