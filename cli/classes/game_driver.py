@@ -6,7 +6,7 @@ import pyinputplus as pyip
 from cli.classes.user import User
 from cli.classes.user import Computer
 from cli.classes.grid import Grid
-from cli.constants.constants import SYMBOL_X, INPUT_LIMIT, INPUT_TIMEOUT
+from cli.constants.constants import INPUT_LIMIT, INPUT_TIMEOUT
 
 
 class GameDriver:
@@ -30,9 +30,9 @@ class GameDriver:
     grid : String[][] of ["X", "O", " "]
     """
 
-    def __init__(self, user_1, computer_level=1):
-        self.user_1 = User(user_1, SYMBOL_X)
-        self.user_2 = Computer(computer_level)
+    def __init__(self, user_1, user_2):
+        self.user_1 = user_1
+        self.user_2 = user_2
         self.grid = Grid()
 
     def _is_ready(self, message):

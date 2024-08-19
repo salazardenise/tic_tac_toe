@@ -5,13 +5,18 @@ for a human user versus a computer.
 import pyinputplus as pyip
 from cli.classes.game_driver import GameDriver as CliGameDriver
 import cli.constants.constants as c
+from cli.classes.user import User, Computer
 
 
 def set_up_game():
+    # set up human user
     username = pyip.inputStr(prompt="Enter username: ",
                              default="user x", 
                              blank=False, 
                              limit=c.INPUT_LIMIT)
+    user_1 = User(username, c.SYMBOL_X)
+
+    # set up computer user
     computer_prompt = "Enter computer level (1, 2, 3, 4)\n" + \
                       "* Level 1: Basic\n" + \
                       "* Level 2: Random\n" + \
@@ -22,7 +27,10 @@ def set_up_game():
                              min=1, 
                              max=4, 
                              limit=c.INPUT_LIMIT)
-    game = CliGameDriver(username, computer_level)
+    user_2 = Computer(computer_level)
+
+    # set up game driver
+    game = CliGameDriver(user_1, user_2)
     return game
 
 

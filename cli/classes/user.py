@@ -3,11 +3,9 @@ import pyinputplus as pyip
 from cli.classes.utils import is_valid_entry
 import cli.constants.constants as c
 
-
 CURRENT_USER_PROMPT = "Current user is {}!"
 COORDINATES_CHOSEN_PROMPT = "You have chosen ({}, {})."
 USER_TALLY_MESSAGE_FORMAT = "User {} won {} out of {} game(s)!"
-
 
 class User:
     """
