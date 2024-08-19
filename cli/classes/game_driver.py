@@ -50,11 +50,12 @@ class GameDriver:
         while self._is_ready(is_ready_prompt):
             # prepare for game
             user_one_turn = True
+            curr_user_won = False
             game_over = self.TIE_MESSAGE
             self.grid.reset()
             total_games += 1
 
-            while self.grid.is_open():
+            while not curr_user_won and self.grid.is_open():
                 # show grid
                 self.grid.pretty_print()
                 # choose user
@@ -67,14 +68,20 @@ class GameDriver:
                 curr_user.play_user(self.grid.grid)
                 # check if user won
                 if self.grid.did_user_win(curr_user.symbol):
-                    game_over = self.USER_WON_GAME_MESSAGE_FORMAT.format(
-                        curr_user.name)
-                    curr_user.increase_num_wins()
-                    other_user.increase_num_loss()
+                    curr_user_won = True
                     break
                 # swtich user
                 user_one_turn = not user_one_turn
             
+            if curr_user_won:
+                game_over = self.USER_WON_GAME_MESSAGE_FORMAT.format(
+                        curr_user.name)
+                curr_user.increase_num_wins()
+                other_user.increase_num_loss()
+            else:
+                curr_user.increase_num_tie()
+                other_user.increase_num_tie()
+
             print(game_over)
             self.grid.pretty_print()
 

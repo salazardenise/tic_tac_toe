@@ -27,6 +27,7 @@ class User:
         self.symbol = symbol
         self.num_wins = 0
         self.num_loss = 0
+        self.num_tie = 0
 
     def play_user(self, grid):
         print(CURRENT_USER_PROMPT.format(self.name))
@@ -49,9 +50,15 @@ class User:
     def increase_num_loss(self):
         self.num_loss += 1
 
+    def increase_num_tie(self):
+        self.num_tie += 1
+
     def print_user_tally(self):
         print(USER_TALLY_MESSAGE_FORMAT.format(
-            self.name, self.num_wins, self.num_wins + self.num_loss))
+            self.name, 
+            self.num_wins, 
+            self.num_wins + self.num_loss + self.num_tie,
+            ))
 
 
 class Computer(User):
