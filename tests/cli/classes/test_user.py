@@ -19,18 +19,43 @@ class TestUser(unittest.TestCase):
         self.assertEqual(self.name, self.user_human.name)
         self.assertEqual(c.SYMBOL_X, self.user_human.symbol)
 
-    def test_increase_num_wins(self):
+    def test_increase_tic_tac_toe_num_wins(self):
         user = u.User(self.name, c.SYMBOL_X)
-        self.assertEqual(0, user.num_wins)
-        self.assertEqual(0, user.num_loss)
-        user.increase_num_wins()
-        self.assertEqual(1, user.num_wins)
-        self.assertEqual(0, user.num_loss)
+        self.assertEqual(0, user.get_tic_tac_toe_num_wins())
+        self.assertEqual(0, user.get_tic_tac_toe_num_loss())
+        self.assertEqual(0, user.get_tic_tac_toe_num_tie())
+        user.increase_tic_tac_toe_num_wins()
+        self.assertEqual(1, user.get_tic_tac_toe_num_wins())
+        self.assertEqual(0, user.get_tic_tac_toe_num_loss())
+        self.assertEqual(0, user.get_tic_tac_toe_num_tie())
 
-    def test_increase_num_losses(self):
+    def test_increase_tic_tac_toe_num_losses(self):
         user = u.User(self.name, c.SYMBOL_X)
-        self.assertEqual(0, user.num_wins)
-        self.assertEqual(0, user.num_loss)
-        user.increase_num_loss()
-        self.assertEqual(0, user.num_wins)
-        self.assertEqual(1, user.num_loss)
+        self.assertEqual(0, user.get_tic_tac_toe_num_wins())
+        self.assertEqual(0, user.get_tic_tac_toe_num_loss())
+        self.assertEqual(0, user.get_tic_tac_toe_num_tie())        
+        user.increase_tic_tac_toe_num_loss()
+        self.assertEqual(0, user.get_tic_tac_toe_num_wins())
+        self.assertEqual(1, user.get_tic_tac_toe_num_loss())
+        self.assertEqual(0, user.get_tic_tac_toe_num_tie())
+
+    def test_increase_tic_tac_toe_num_tied(self):
+        user = u.User(self.name, c.SYMBOL_X)
+        self.assertEqual(0, user.get_tic_tac_toe_num_wins())
+        self.assertEqual(0, user.get_tic_tac_toe_num_loss())
+        self.assertEqual(0, user.get_tic_tac_toe_num_tie())
+        user.increase_tic_tac_toe_num_tie()
+        self.assertEqual(0, user.get_tic_tac_toe_num_wins())
+        self.assertEqual(0, user.get_tic_tac_toe_num_loss())
+        self.assertEqual(1, user.get_tic_tac_toe_num_tie())
+    
+    @unittest.mock.patch('builtins.print')
+    def test_print_user_tally_tic_tac_toe(self, mock_print):
+        user = u.User(self.name, c.SYMBOL_X)
+        user.print_user_tally_tic_tac_toe()
+        mock_print.assert_has_calls([
+            unittest.mock.call(u.USER_TALLY_TTT_MESSAGE_FORMAT.format(
+                self.name, 0, 0))
+            ])
+
+

@@ -2,10 +2,11 @@ import random
 import pyinputplus as pyip
 from cli.classes.utils import is_valid_entry
 import cli.constants.constants as c
+import cli.classes.score as score
 
 CURRENT_USER_PROMPT = "Current user is {}!"
 COORDINATES_CHOSEN_PROMPT = "You have chosen ({}, {})."
-USER_TALLY_MESSAGE_FORMAT = "User {} won {} out of {} game(s)!"
+USER_TALLY_TTT_MESSAGE_FORMAT = "User {} won {} out of {} tic tac toe game(s)!"
 
 class User:
     """
@@ -25,9 +26,7 @@ class User:
     def __init__(self, name, symbol):
         self.name = name
         self.symbol = symbol
-        self.num_wins = 0
-        self.num_loss = 0
-        self.num_tie = 0
+        self.tic_tac_toe_score = score.TicTacToeScore()
 
     def play_user(self, grid):
         print(CURRENT_USER_PROMPT.format(self.name))
@@ -44,20 +43,30 @@ class User:
             print(COORDINATES_CHOSEN_PROMPT.format(x, y))
         grid[x][y] = self.symbol
 
-    def increase_num_wins(self):
-        self.num_wins += 1
+    def increase_tic_tac_toe_num_wins(self):
+        self.tic_tac_toe_score.num_wins += 1
 
-    def increase_num_loss(self):
-        self.num_loss += 1
+    def increase_tic_tac_toe_num_loss(self):
+        self.tic_tac_toe_score.num_loss += 1
 
-    def increase_num_tie(self):
-        self.num_tie += 1
+    def increase_tic_tac_toe_num_tie(self):
+        self.tic_tac_toe_score.num_tie += 1
 
-    def print_user_tally(self):
-        print(USER_TALLY_MESSAGE_FORMAT.format(
+    def get_tic_tac_toe_num_wins(self):
+        return self.tic_tac_toe_score.num_wins
+
+    def get_tic_tac_toe_num_loss(self):
+        return self.tic_tac_toe_score.num_loss
+
+    def get_tic_tac_toe_num_tie(self):
+        return self.tic_tac_toe_score.num_tie
+
+    def print_user_tally_tic_tac_toe(self):
+        total_ttt_games = self.tic_tac_toe_score.num_wins + self.tic_tac_toe_score.num_loss + self.tic_tac_toe_score.num_tie
+        print(USER_TALLY_TTT_MESSAGE_FORMAT.format(
             self.name, 
-            self.num_wins, 
-            self.num_wins + self.num_loss + self.num_tie,
+            self.tic_tac_toe_score.num_wins, 
+            total_ttt_games,
             ))
 
 

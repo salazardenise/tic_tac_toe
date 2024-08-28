@@ -9,16 +9,42 @@ from cli.classes.grid import Grid
 from cli.constants.constants import INPUT_LIMIT, INPUT_TIMEOUT
 
 
-class GameDriver:
+class CliGameDriver:
+
+    PROMPT_CHOOSE_GAME = "Let's play some games!\nEnter TTT for tic tac toe.\nEnter RPS for rock paper Scissors.\nEnter exit to exit.\n"
+    
+    def __init__(self, user_1, user_2):
+        self.user_1 = user_1
+        self.user_2 = user_2
+
+    def _choose_game(self):
+        game_choice = pyip.inputMenu(['TTT', 'RPS', 'exit'], 
+                        prompt=PROMPT_CHOOSE_GAME,
+                        limit=INPUT_LIMIT,
+                        timeout=INPUT_TIMEOUT)
+        return game_choice
+
+
+    def play(self):
+        tic_tac_toe = CliTicTacToe(user_1, user_2)
+
+        choice = self._choose_game()
+        while choice != "exit":
+            if choice == "TTT":
+                tic_tac_toe.play()
+            elif choice == "RPS":
+                print("this game has not been implemented yet")
+            # TODO: implement rock paper scissors
+            # else:  # choice == "RPS"
+
+class CliTicTacToe:
 
     WELCOME_MESSAGE = "Welcome to Tic, Tac, Toe!"
     PROMPT_PLAY = "Ready to Play? (Y/N)\n"
     PROMPT_PLAY_AGAIN = "Want to play again? (Y/N)\n"
-
+    CONGRATS_MESSAGE = "Congrats y'all!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     TIE_MESSAGE = "It's a Tie!"
     USER_WON_GAME_MESSAGE_FORMAT = "Wahoo! User {} won!"
-    CONGRATS_MESSAGE = "Congrats y'all!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    USER_TALLY_MESSAGE_FORMAT = "User {} won {} out of {} game(s)!"
 
     """
     GameDriver represents a game driver for tic, tac, toe.
@@ -34,6 +60,7 @@ class GameDriver:
         self.user_1 = user_1
         self.user_2 = user_2
         self.grid = Grid()
+        self.total_games = 0
 
     def _is_ready(self, message):
         is_ready = pyip.inputMenu(['Y', 'N'], 
@@ -44,16 +71,15 @@ class GameDriver:
 
     def play(self):
         print(self.WELCOME_MESSAGE)
-        total_games = 0
-        is_ready_prompt = self.PROMPT_PLAY
+        is_ready = self._is_ready(self.PROMPT_PLAY)
 
-        while self._is_ready(is_ready_prompt):
+        while is_ready:
             # prepare for game
             user_one_turn = True
             curr_user_won = False
             game_over = self.TIE_MESSAGE
             self.grid.reset()
-            total_games += 1
+            self.total_games += 1
 
             while not curr_user_won and self.grid.is_open():
                 # show grid
@@ -76,18 +102,18 @@ class GameDriver:
             if curr_user_won:
                 game_over = self.USER_WON_GAME_MESSAGE_FORMAT.format(
                         curr_user.name)
-                curr_user.increase_num_wins()
-                other_user.increase_num_loss()
+                curr_user.increase_tic_tac_toe_num_wins()
+                other_user.increase_tic_tac_toe_num_loss()
             else:
-                curr_user.increase_num_tie()
-                other_user.increase_num_tie()
+                curr_user.increase_tic_tac_toe_num_tie()
+                other_user.increase_tic_tac_toe_num_tie()
 
             print(game_over)
             self.grid.pretty_print()
 
             # ask if want to play game again
-            is_ready_prompt = self.PROMPT_PLAY_AGAIN
+            is_ready = self._is_ready(self.PROMPT_PLAY_AGAIN)
 
         print(self.CONGRATS_MESSAGE)
-        self.user_1.print_user_tally()
-        self.user_2.print_user_tally()
+        self.user_1.print_user_tally_tic_tac_toe()
+        self.user_2.print_user_tally_tic_tac_toe()
